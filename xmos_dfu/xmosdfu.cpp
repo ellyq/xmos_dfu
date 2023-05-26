@@ -54,6 +54,7 @@ DEALINGS WITH THE SOFTWARE OR DOCUMENTATION.
 /* the device's vendor and product id */
 #define XMOS_VID 0x20b1
 #define THESYCON_VID 0x152A
+#define AUDIENT_VID 0x2708
 
 #define ATOMDAC_PID 0x30E1
 #define ELEMENTII_PID 0x30DA
@@ -61,13 +62,18 @@ DEALINGS WITH THE SOFTWARE OR DOCUMENTATION.
 #define ELEMENTIII_PID 0x8885
 #define ELDACIIPLUS_PID 0x8886
 #define ELDACIIPLUSBal_PID 0x8889
+#define EVO4_PID 0x0006
+#define EVO8_PID 0x0007
 
 unsigned short pidList[] = {ATOMDAC_PID, 
                             ELEMENTII_PID,
                             ELDACII_PID,
                             ELEMENTIII_PID,
                             ELDACIIPLUS_PID,
-                            ELDACIIPLUSBal_PID}; 
+                            ELDACIIPLUSBal_PID,
+			    EVO4_PID,
+			    EVO8_PID
+}; 
 
 unsigned int XMOS_DFU_IF = 0;
 
@@ -109,7 +115,7 @@ static int find_xmos_device(unsigned int id, unsigned int list)
         libusb_get_device_descriptor(dev, &desc); 
         printf("VID = 0x%x, PID = 0x%x, Firmware Version: %x\n", desc.idVendor, desc.idProduct, desc.bcdDevice);
 
-        if(desc.idVendor == XMOS_VID || desc.idVendor == THESYCON_VID)
+        if(desc.idVendor == XMOS_VID || desc.idVendor == THESYCON_VID || desc.idVendor == AUDIENT_VID)
         {
             for(int j = 0; j < sizeof(pidList)/sizeof(unsigned short); j++)
             {
